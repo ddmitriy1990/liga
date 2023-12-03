@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definition 
+	targetNamespace = 'http://localhost/employment'
+	xmlns:tns = 'http://localhost/employment'
+	xmlns ='http://schemas.xmlsoap.org/wsdl/'
+	xmlns:soap = 'http://schemas.xmlsoap.org/wsdl/soap/'
+	xmlns:xsd = 'http://www.w3.org/2001/XMLSchema'>
+	<types>
+		<schema elementFormDefault="qualified" targetNamespace="http://localhost/employment">
+			<message name='postUserEmploymentRequest'>
+				<part name='lastName' type='xsd:string'/>
+				<part name='firstName' type='xsd:string'/>
+				<part name='midleName' type='xsd:string'/>
+				<part name='dateBirth' type='xsd:date'/>
+				<part name='gender' type='xsd:string'/>
+				<part name='phone' type='xsd:string'/>
+				<part name='mail' type='xsd:string'/>
+				<part name='directionInternship' type='xsd:string'/>
+				<element name='position' type='xsd:string'/>
+			</message>
+			<message name='postUserEmploymentResponse'>
+				<part name='description' type='xsd:string'/>
+			</message>
+		</schema>
+	</types>
+	<portType name='employmentPortType'>
+		<operation name='postUserEmployment'>
+			<input message='tns:postUserEmploymentRequest'/>
+			<output message='tns:postUserEmploymentResponse'/>
+		</operation>
+	</portType>
+	<binding name='employmentBinding' type='tns:employmentPortType'>
+		<soap:binding transport = 'http://schemas.xmlsoap.org/soap/http' />
+		<operation name = 'postUserEmployment'>
+			<soap:operation soapAction ='postUserEmployment'/>
+			<input>
+				<soap:body use='literal'/>
+			</input>
+			<output>
+				<soap:body use='literal'/>
+			</output>
+		</operation>
+	</binding>
+	<service name='employmentService'>
+		<port name='employmentPort' binding='tns:employmentBinding'>
+			<soap:address location='http://localhost/server/#/'/>
+		</port>
+	</service>
+</definition>
+
+
