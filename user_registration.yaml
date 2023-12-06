@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: Система проведения стажировок
+  version: 1.0.0
+tags:
+  - name: Система стажировок
+    description: API системы стажировок
+paths:
+  /api/users:
+    post:
+      tags:
+        - Система стажировок
+      summary: Регистрация пользователя
+      operationId: userRegistration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+              properties:
+                username:
+                  type: string
+                  description: Логин пользователя
+      responses:
+        '200':
+          description: Пользователь успешно зарегистрирован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Состояние процесса регистрации
+                  description:
+                    type: string
+                    description: Уведомление получаемое пользователем по результатам регистрации
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Некорректный запрос
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Запрос не был выполнен из-за непредвиденной проблемы с сервером
+        '503':
+          description: service temporarily unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Время ожидания истекло
+ 
+components:
+  securitySchemes:
+    userRegistration:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
