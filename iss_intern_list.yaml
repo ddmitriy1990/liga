@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: Система проведения стажировок
+  version: 1.0.0
+tags:
+  - name: Система стажировок
+    description: API системы стажировок
+paths:
+  /api/iss/internList:
+    post:
+      tags:
+        - Система стажировок
+      summary: Отправка списка стажеров на проверку
+      operationId: internList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - lastName
+                - firstName
+                - middleName
+                - age
+                - phone
+                - mail
+                - isEmployed
+                - placeWork
+              properties:
+                lastName:
+                  type: string
+                  description: Фамилия
+                firstName:
+                  type: string
+                  description: Имя
+                middleName:
+                  type: string
+                  description: Отчество
+                age:
+                  type: integer
+                  description: Возраст
+                phone:
+                  type: string
+                  description: Телефон
+                mail:
+                  type: string
+                  description: Электронная почта
+                isEmployed:
+                  type: boolean
+                  description: Признак текущей трудоустроенности
+                placeWork:
+                  type: string
+                  description: Место работы
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                    description: Данные приняты на обработку
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Некорректный запрос
+        '403':
+          description: forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Доступ запрещен
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Запрос не был выполнен из-за непредвиденной проблемы с сервером
+        '503':
+          description: service temporarily unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Время ожидания истекло
+ 
+components:
+  securitySchemes:
+    InternList:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
