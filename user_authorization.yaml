@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: Система проведения стажировок
+  version: 1.0.0
+tags:
+  - name: Система стажировок
+    description: API системы стажировок
+paths:
+  /api/users:
+    post:
+      tags:
+        - Система стажировок
+      summary: Авторизация пользователя
+      operationId: userAuthorization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  description: Логин пользователя
+                password:
+                  type: string
+                  description: Пароль пользователя
+      responses:
+        '200':
+          description: Пользователь успешно авторизован
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: Токен авторизации
+                  expires_in:
+                    type: number
+                    format: integer
+                    description: Время жизни токена
+                  token_type:
+                    type: string
+                    description: Тип токена
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Некорректный запрос
+        '401':
+          description: unauthorized error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Пользователь не найден
+        '403':
+          description: forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Доступ запрещен
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Запрос не был выполнен из-за непредвиденной проблемы с сервером
+        '503':
+          description: service temporarily unavailable
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                    description:
+                      type: string
+                      description: Время ожидания истекло
+ 
+components:
+  securitySchemes:
+    userAuthorization:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
